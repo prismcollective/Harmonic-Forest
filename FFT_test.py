@@ -16,7 +16,7 @@ def plot_magnitude_spectrum(signal : str, title : str, sr : int, f_ratio = 1):
     plt.show()
 
 #https://www.youtube.com/watch?v=R-5uxKTRjzM&t=336s&ab_channel=ValerioVelardo-TheSoundofAI
-BASE_DIR = "/Users/samcy/OneDrive - University of Waterloo/Harmonic-Forest/Music Assets"
+BASE_DIR = "/Users/samcy/OneDrive - University of Waterloo/Harmonic-Forest/Music-Assets"
 violin_file = "violin-c4.wav"
 piano_file = "piano-c_C_major.wav"
 fur_elise_file = "fur-elise-beethoven-216331.wav"

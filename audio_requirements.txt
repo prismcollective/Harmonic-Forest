@@ -1,0 +1,28 @@
+# run pip install -r audio_requirements.txt in your venv to install
+
+
+# Core Libraries for Audio Processing
+numpy
+scipy
+librosa
+pydub
+audioread
+
+# Visualization Libraries
+matplotlib
+seaborn
+
+# Audio I/O and Real-Time Processing
+soundfile
+sounddevice
+pyaudio
+
+# Optional Advanced Libraries
+torch
+torchvision
+torchaudio
+#essentia #requires a lot of additional dependencies unfortunately
+
+# Utilities for File Management
+ffmpeg-python
+
