@@ -16,6 +16,7 @@ seaborn
 soundfile
 sounddevice
 pyaudio
+pyserial
 
 # Optional Advanced Libraries
 torch
