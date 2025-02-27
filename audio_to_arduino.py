@@ -4,19 +4,23 @@ import numpy as np
 import matplotlib.pyplot as plt
 import librosa
 import serial
+import graphing
+
 BASE_DIR = "/Users/samcy/OneDrive - University of Waterloo/Harmonic-Forest/Music-Assets"
-file_name = "25481__freqman__violin-minuet_boccherini-edit.wav"
+file_name = "violin-c4.wav"
 file_path = os.path.join(BASE_DIR, file_name)
 y, sr = librosa.load(file_path)
-N_MELS = 6  # Number of frequency bands, should match with # of rods...
+
+N_MELS = 200  # Number of frequency bands, should match with # of rods...
+
 mel_spectrogram = librosa.feature.melspectrogram(y=y, sr=sr, n_fft=2048, hop_length=512, n_mels=N_MELS)
+graphing.show_mel_spectrogram(mel_spectrogram)
 log_mel_spectrogram = librosa.power_to_db(mel_spectrogram)
 normalized = (log_mel_spectrogram - log_mel_spectrogram.min()) / (log_mel_spectrogram.max() - log_mel_spectrogram.min())
-
 # Set up serial connection
-ARDUINO_PORT = 'COM3'  # Replace with your Arduino's port
-BAUD_RATE = 9600
-
+ARDUINO_PORT = 'COM4'  # Replace with your Arduino's port
+BAUD_RATE = 115200
+'''
 try:
     ser = serial.Serial(port=ARDUINO_PORT, baudrate=BAUD_RATE, timeout=1)
     print(f"Connected to Arduino on {ARDUINO_PORT}")
@@ -38,3 +42,4 @@ except KeyboardInterrupt:
 finally:
     ser.close()  # Close serial connection
     print("Serial connection closed")
+    '''
