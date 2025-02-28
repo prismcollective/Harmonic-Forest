@@ -2,7 +2,7 @@ import librosa
 import numpy as np
 import matplotlib.pyplot as plt
 
-def analyze_frequency_buckets(audio_path, num_buckets=10):
+def analyze_frequency_buckets(audio_path, num_buckets=8):
     # Load audio file
     y, sr = librosa.load(audio_path)
     
