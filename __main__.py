@@ -1,8 +1,8 @@
 import extract_frequencies
-import os
-BASE_DIR = "/Users/samcy/OneDrive - University of Waterloo/Harmonic-Forest/Music-Assets"
-file_name = "just-major-sc.wav"
-file_path = os.path.join(BASE_DIR, file_name)
+import audio_to_arduino
+import numpy as np
+normalized_activations = np.load('normalized-activations.npy')
+bucket_edges = np.load('bucket-edges.npy')
 
-normalized_activations, bucket_edges = extract_frequencies.analyze_frequency_buckets(file_path)
 extract_frequencies.visualize_activations(normalized_activations,bucket_edges)
+audio_to_arduino.send_to_arduino(normalized_activations)
