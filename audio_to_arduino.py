@@ -63,10 +63,10 @@ plt.colorbar(label='Normalized Amplitude')
 plt.title(f'Normalized Fundamental Frequencies Split into {N_RODS} Rod Buckets')
 plt.show()
 """
-def send_to_arduino(normalized_activations, ARDUINO_PORT = "COM5", BAUD_RATE = 115200):
+def send_to_arduino(normalized_activations, audio_length, ARDUINO_PORT = "COM5", BAUD_RATE = 115200):
 
     try:
-        ser = serial.Serial(port=ARDUINO_PORT, baudrate=BAUD_RATE, timeout=10)
+        ser = serial.Serial(port=ARDUINO_PORT, baudrate=BAUD_RATE, timeout=1)
         print(f"Connected to Arduino on {ARDUINO_PORT}")
     except serial.SerialException as e:
         print(f"Failed to connect to Arduino: {e}")
@@ -81,7 +81,7 @@ def send_to_arduino(normalized_activations, ARDUINO_PORT = "COM5", BAUD_RATE = 1
             data_str += '\n' # delimiter
             ser.write(data_str.encode())  # Send data to Arduino
             print(f"Sent: {data_str}")
-            time.sleep(0.1)  # Adjust delay to match Arduino's processing speed
+            time.sleep(audio_length/normalized_activations.shape[1])  # Adjust delay to match Arduino's processing speed
     except KeyboardInterrupt:
         print("Interrupted by user")
     finally:
