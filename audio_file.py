@@ -14,10 +14,11 @@ class audio_file:
         self.audio_path = os.path.join(BASE_DIR, audio_path)
         self.audio_length = 0
         self.normalized_activations, self.bucket_edges = self.analyze_frequency_buckets(self.audio_path,self.num_buckets)
+    
     def __init__(self, audio_path = "",BASE_DIR = "/Users/samcy/OneDrive - University of Waterloo/Harmonic-Forest/Music-Assets", num_buckets = 8):
         self.audio_path = audio_path
-        self.normalized_activations_filename = audio_path + "na.npy"
-        self.bucket_edges_filename = audio_path + "be.npy"
+        self.normalized_activations_filename = audio_path + "-na.npy"
+        self.bucket_edges_filename = audio_path + "-be.npy"
         self.BASE_DIR = BASE_DIR
         self.num_buckets = num_buckets # should match # of rods
         self.audio_path = os.path.join(BASE_DIR, audio_path)
