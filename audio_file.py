@@ -5,10 +5,19 @@ import numpy as np
 import matplotlib as plt
 class audio_file:  
 
-    def __init__(self, normalized_activations_filename, bucket_edges_filename,audio_path,BASE_DIR = "/Users/samcy/OneDrive - University of Waterloo/Harmonic-Forest/Music-Assets", num_buckets = 8):
+    def __init__(self, normalized_activations_filename, bucket_edges_filename,audio_path = "",BASE_DIR = "/Users/samcy/OneDrive - University of Waterloo/Harmonic-Forest/Music-Assets", num_buckets = 8):
         self.audio_path = audio_path
         self.normalized_activations_filename = normalized_activations_filename
         self.bucket_edges_filename = bucket_edges_filename
+        self.BASE_DIR = BASE_DIR
+        self.num_buckets = num_buckets # should match # of rods
+        self.audio_path = os.path.join(BASE_DIR, audio_path)
+        self.audio_length = 0
+        self.normalized_activations, self.bucket_edges = self.analyze_frequency_buckets(self.audio_path,self.num_buckets)
+    def __init__(self, audio_path = "",BASE_DIR = "/Users/samcy/OneDrive - University of Waterloo/Harmonic-Forest/Music-Assets", num_buckets = 8):
+        self.audio_path = audio_path
+        self.normalized_activations_filename = audio_path + "na.npy"
+        self.bucket_edges_filename = audio_path + "be.npy"
         self.BASE_DIR = BASE_DIR
         self.num_buckets = num_buckets # should match # of rods
         self.audio_path = os.path.join(BASE_DIR, audio_path)
@@ -75,8 +84,10 @@ class audio_file:
  
     def get_audio_duration(self):
         return self.audio_length
-    #to do
-    """
-    Make a class which contains: file path, source, audio buffer, 
-    generate array method
-    """
+    
+    def get_normalized_activations(self):
+        return self.normalized_activations
+    
+    def get_bucket_edges(self):
+        return self.bucket_edges
+   
