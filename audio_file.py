@@ -2,7 +2,7 @@ import os
 import librosa
 import extract_frequencies
 import numpy as np
-import matplotlib as plt
+import matplotlib.pyplot as plt
 class audio_file:  
 
     def __init__(self, normalized_activations_filename, bucket_edges_filename,audio_path = "",BASE_DIR = "/Users/samcy/OneDrive - University of Waterloo/Harmonic-Forest/Music-Assets", num_buckets = 8):
@@ -81,8 +81,24 @@ class audio_file:
         plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
         plt.tight_layout()
         plt.show()
+    
+    def visualize_activations(self, bucket_num = 0):
+        plt.figure(figsize=(12, 6))
+        
+        # Create time axis
+        time = np.linspace(0, len(self.normalized_activations[0]) * 0.1, len(self.normalized_activations[0]))
+        
+        # Plot each bucket's activation
+        
+        plt.plot(time, self.normalized_activations[bucket_num], label=f'{self.bucket_edges[bucket_num]:.1f}-{self.bucket_edges[bucket_num+1]:.1f} Hz')
+        
+        plt.title('Frequency Bucket Activations Over Time')
+        plt.xlabel('Time (s)')
+        plt.ylabel('Normalized Amplitude')
+        plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left')
+        plt.tight_layout()
+        plt.show()
 
- 
     def get_audio_duration(self):
         return self.audio_length
     
