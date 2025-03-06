@@ -1,9 +1,6 @@
-#import os
 import numpy as np
-
 import serial
 import time
-#import graphing
 
 
 def send_to_arduino(normalized_activations, audio_length, ARDUINO_PORT = "COM5", BAUD_RATE = 115200):
@@ -23,7 +20,7 @@ def send_to_arduino(normalized_activations, audio_length, ARDUINO_PORT = "COM5",
             data_str = ','.join(f"{amp:.2f}" for amp in current_amplitudes)
             data_str += '\n' # delimiter
             ser.write(data_str.encode())  # Send data to Arduino
-            print(f"Sent: {data_str}")
+            #print(f"Sent: {data_str}")
             time.sleep(audio_length/normalized_activations.shape[1])  # Adjust delay to match Arduino's processing speed
     except KeyboardInterrupt:
         print("Interrupted by user")
