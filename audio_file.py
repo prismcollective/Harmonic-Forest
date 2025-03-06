@@ -40,7 +40,7 @@ class audio_file:
         frequencies = librosa.fft_frequencies(sr=sr, n_fft=D.shape[0] * 2 - 2)
         
         # Create logarithmically spaced frequency buckets
-        min_freq = 20  # Minimum frequency to analyze (Hz)
+        min_freq = 50  # Minimum frequency to analyze (Hz)
         max_freq = sr / 2  # Nyquist frequency
         bucket_edges = np.logspace(np.log10(min_freq), np.log10(max_freq), num=num_buckets + 1)
         
