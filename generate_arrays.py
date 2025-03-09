@@ -6,8 +6,8 @@ BASE_DIR = "/Users/samcy/OneDrive - University of Waterloo/Harmonic-Forest/Music
 file_name = "just-major-sc.wav"
 file_path = os.path.join(BASE_DIR, file_name)
 
-normalized_activations, bucket_edges = extract_frequencies.analyze_frequency_buckets(file_path, num_buckets = 2)
+normalized_activations, bucket_edges = extract_frequencies.analyze_frequency_buckets(file_path, num_buckets = 8)
 
 
-np.save('normalized-activations.npy', normalized_activations)
-np.save('bucket-edges.npy', bucket_edges)
+np.save('major-scale.npy', normalized_activations)
+np.save('major-scale-buckets.npy', bucket_edges)

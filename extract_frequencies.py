@@ -2,12 +2,15 @@ import librosa
 import numpy as np
 import matplotlib.pyplot as plt
 
-def analyze_frequency_buckets(audio_path, num_buckets=8):
+def analyze_frequency_buckets(audio_path, num_buckets=8, frame_duration_ms=100):
     # Load audio file
     y, sr = librosa.load(audio_path)
     
-    # Compute Short-Time Fourier Transform (STFT)
-    D = librosa.stft(y)
+    # Calculate hop length in samples based on frame duration
+    hop_length = int(frame_duration_ms * sr / 1000)
+    
+    # Compute Short-Time Fourier Transform (STFT) with fixed hop length
+    D = librosa.stft(y, hop_length=hop_length)
     magnitude = np.abs(D)
     
     # Get frequency bins corresponding to STFT
