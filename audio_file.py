@@ -1,29 +1,34 @@
 import os
 import librosa
-import extract_frequencies
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.ndimage import gaussian_filter1d
 class audio_file:  
 
-    def __init__(self, normalized_activations_filename, bucket_edges_filename,audio_path = "",BASE_DIR = "/Users/samcy/OneDrive - University of Waterloo/Harmonic-Forest/Music-Assets", num_buckets = 8):
-        self.audio_path = audio_path
-        self.normalized_activations_filename = normalized_activations_filename
-        self.bucket_edges_filename = bucket_edges_filename
-        self.BASE_DIR = BASE_DIR
-        self.num_buckets = num_buckets # should match # of rods
+    def __init__(self, audio_path="", 
+                 BASE_DIR="/Users/samcy/OneDrive - University of Waterloo/Harmonic-Forest/Music-Assets", 
+                 num_buckets=8, 
+                 normalized_activations_filename=None, 
+                 bucket_edges_filename=None):
+        
         self.audio_path = os.path.join(BASE_DIR, audio_path)
-        self.audio_length = 0
-        self.normalized_activations, self.bucket_edges = self.analyze_frequency_buckets(self.audio_path,self.num_buckets)
-    
-    def __init__(self, audio_path = "",BASE_DIR = "/Users/samcy/OneDrive - University of Waterloo/Harmonic-Forest/Music-Assets", num_buckets = 8):
-        self.audio_path = audio_path
-        self.normalized_activations_filename = audio_path + "-na.npy"
-        self.bucket_edges_filename = audio_path + "-be.npy"
         self.BASE_DIR = BASE_DIR
-        self.num_buckets = num_buckets # should match # of rods
-        self.audio_path = os.path.join(BASE_DIR, audio_path)
+        self.num_buckets = num_buckets  # Should match the number of rods
         self.audio_length = 0
-        self.normalized_activations, self.bucket_edges = self.analyze_frequency_buckets(self.audio_path,self.num_buckets)
+
+        # Generate filenames if not provided
+        self.normalized_activations_filename = (
+            normalized_activations_filename if normalized_activations_filename 
+            else f"{audio_path}-na.npy"
+        )
+        self.bucket_edges_filename = (
+            bucket_edges_filename if bucket_edges_filename 
+            else f"{audio_path}-be.npy"
+        )
+
+        # Analyze frequency buckets
+        self.normalized_activations, self.bucket_edges = self.analyze_frequency_buckets(self.audio_path, self.num_buckets)
+
     
     def analyze_frequency_buckets(self, audio_path, num_buckets=8, frame_duration_ms=100):
     # Load audio file
