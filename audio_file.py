@@ -82,7 +82,7 @@ class audio_file:
         plt.tight_layout()
         plt.show()
     
-    def visualize_activations(self, bucket_num = 0):
+    def visualize_single_bucket(self, bucket_num):
         plt.figure(figsize=(12, 6))
         
         # Create time axis
