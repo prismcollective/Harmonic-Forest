@@ -28,8 +28,10 @@ class audio_file:
 
         # Analyze frequency buckets
         self.normalized_activations, self.bucket_edges = self.analyze_frequency_buckets(self.audio_path, self.num_buckets)
-
-    
+        self.apply_gaussian_filter()
+    def apply_gaussian_filter(self, sigma = 1):
+        for i in range(self.num_buckets):
+            self.normalized_activations[i] = gaussian_filter1d(self.normalized_activations[i], sigma=sigma)
     def analyze_frequency_buckets(self, audio_path, num_buckets=8, frame_duration_ms=100):
     # Load audio file
         y, sr = librosa.load(audio_path)
