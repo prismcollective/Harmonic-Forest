@@ -27,12 +27,16 @@ class audio_file:
         )
 
         # Analyze frequency buckets
-        if(not os.path.exists(self.normalized_activations_filename)):
-            self.normalized_activations, self.bucket_edges = self.analyze_frequency_buckets(self.audio_path, self.num_buckets)
-            self.apply_gaussian_filter()
+        #if the file exists and its number of buckets is equal to the number requested
+        if(os.path.exists(self.normalized_activations_filename) and np.load(self.bucket_edges_filename).shape[0] == self.num_buckets+1):
+            self.normalized_activations = np.load(self.normalized_activations_filename)
+            self.bucket_edges = np.load(self.bucket_edges_filename)
         else:
-            self.normalized_activations = np.load(self.normalized_activiations_filename)
-            self.bucket_edges_filename = np.load(self.bucket_edges_filename)
+            self.normalized_activations, self.bucket_edges = self.analyze_frequency_buckets(self.audio_path, self.num_buckets)
+            self.generate_arrays()
+        
+        self.apply_gaussian_filter()
+            
     def apply_gaussian_filter(self, sigma = 1):
         for i in range(self.num_buckets):
             self.normalized_activations[i] = gaussian_filter1d(self.normalized_activations[i], sigma=sigma)
