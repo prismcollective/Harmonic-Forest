@@ -2,7 +2,7 @@ const int num_rods = 6;  // Number of electromagnets
 int em_pins[num_rods] = {D1, D2, D5, D6, D7, D8};  // PWM-capable GPIO pins
 
 void setup() {
-  Serial.begin(115200);  // ESP8266 typically uses faster baud rate
+  Serial.begin(115200 );  // ESP8266 typically uses faster baud rate
   for (int i = 0; i < num_rods; i++) {
     pinMode(em_pins[i], OUTPUT);  // Initialize PWM pins
   }
