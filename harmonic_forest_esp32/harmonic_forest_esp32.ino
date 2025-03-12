@@ -1,5 +1,5 @@
-const int num_rods = 2;  // Number of electromagnets
-int em_pins[num_rods] = {11,12};  // Use PWM-capable GPIO pins on ESP32
+const int num_rods = 2;  // Number of motors
+int em_pins[num_rods] = {11,12};  
 
 void setup() {
   Serial.begin(115200);  // Start serial communication
@@ -29,7 +29,6 @@ void loop() {
   }
 }
 
-// Existing parseData function remains unchanged
 void parseData(String data_str, float* amplitudes) {
   int index = 0;
   int start = 0;
