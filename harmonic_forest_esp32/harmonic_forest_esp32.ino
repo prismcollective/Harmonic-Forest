@@ -55,8 +55,7 @@ void parseData(String data_str, float* degrees_rotation) {
   
   while (end != -1 && index < num_motors) {
     String value_str = data_str.substring(start, end);
-    degrees_rotation[index] = constrain(value_str.toFloat(), 0.0, 1.0) * 180
-    degrees_rotation[index] *= 180;//convert to degrees
+    degrees_rotation[index] = constrain(value_str.toFloat(), 0.0, 1.0) * 180;//convert to degrees
     start = end + 1;
     end = data_str.indexOf(',', start);
     index++;
@@ -65,15 +64,17 @@ void parseData(String data_str, float* degrees_rotation) {
   if (index < num_motors) {
     String value_str = data_str.substring(start);
     degrees_rotation[index] = value_str.toFloat();
+    degrees_rotation[index] = constrain(value_str.toFloat(), 0.0, 1.0) * 180;
   }
 }
 
 void stepMotor(int motor_number,int angle) {
-  digitalWrite(dir_pins[motor_number], (int)fabs(angle)/angle);//negative direction would be cw, positive would be ccw
+  int direction = (angle > 0) ? HIGH : LOW;
+  digitalWrite(dir_pins[motor_number], direction);//negative direction would be cw, positive would be ccw
   
   for(int step = 0; step < (int)abs(angle)/motor_step_angles[motor_number]; step++){
     digitalWrite(step_pins[motor_number], HIGH);
-    delayMicroseconds(STEP_DELAYS[num_motors]);
+    delayMicroseconds(STEP_DELAYS[motor_number]);
   }
 
 }
@@ -87,13 +88,14 @@ void stepMotors(float *angle_differences)
   int max_steps = (int)findMax(steps_required,num_motors);
   for (int step = 0; step < max_steps; step++)
   {
+    int steps_required = round(abs(angle_differences[j]) / motor_step_angles[j]);
+
     for (int j = 0; j < num_motors; j++)
     {
       
       int direction = (angle_differences[j] > 0) ? HIGH : LOW;
       if (angle_differences[j] == 0) continue;
-      int steps_required = round(abs(angle_differences[j]) / motor_step_angles[j]);
-      if (step < steps_required)
+      if (step < steps_required)//if motor still needs to go to place
       {
         
         digitalWrite(dir_pins[j], direction);
