@@ -4,8 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.ndimage import gaussian_filter1d
 class audio_file:  
-
-    def __init__(self, audio_path="", 
+    def __init__(self, audio_path, 
                  BASE_DIR="/Users/samcy/OneDrive - University of Waterloo/Harmonic-Forest/Music-Assets", 
                  num_buckets=8, 
                  normalized_activations_filename=None, 
@@ -31,6 +30,7 @@ class audio_file:
         if(os.path.exists(self.normalized_activations_filename) and np.load(self.bucket_edges_filename).shape[0] == self.num_buckets+1):
             self.normalized_activations = np.load(self.normalized_activations_filename)
             self.bucket_edges = np.load(self.bucket_edges_filename)
+            self.audio_length = librosa.get_duration(path = self.audio_path)
         else:
             self.normalized_activations, self.bucket_edges = self.analyze_frequency_buckets(self.audio_path, self.num_buckets)
             self.generate_arrays()
