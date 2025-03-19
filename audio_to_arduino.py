@@ -25,5 +25,6 @@ def send_to_arduino(normalized_activations, audio_length, ARDUINO_PORT = "COM5",
     except KeyboardInterrupt:
         print("Interrupted by user")
     finally:
+        ser.write("RESET\n".encode())
         ser.close()  # Close serial connection
         print("Serial connection closed")
