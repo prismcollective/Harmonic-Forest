@@ -1,11 +1,15 @@
 #include <math.h>
 const int num_motors = 8;  // Number of steppers
-int dir_pins[num_motors] = {13,11,9,3,18,16,7,5};  //starts odd GPIO
-int step_pins[num_motors] = {14,12,10,46,8,17,15,6}; //starts on even GPIO
-float motor_step_angles[num_motors] = {1.8,1.8,1.8,1.8,1.8,1.8,1.8,1.8};//each step corresponds to this amount of rotation;
+int dir_pins[num_motors] = {13,3,11,19,9,0,21,48};//actual pins
+int step_pins[num_motors] = {14,46,12,20,10,35,47,45};
+float motor_step_angles[num_motors] = {1.8,3.6,3.6,3.6,3.6,1.8,1.8,1.8};//each step corresponds to this amount of rotation;
+//19,20
+//
+//DO NOT FORGET TO MAKE THE STEP ANGLE CORRECT FOR THE BIG ASS MOTOR
+//
 float prev_angles[num_motors] = {};
 int STEP_DELAYS[num_motors] = {};
-const int STEP_DELAY = 500;
+const int STEP_DELAY = 800;
  //some motors can go faster, make sure to change that 
 
 void setup() {
@@ -20,13 +24,16 @@ void setup() {
   }
   
 }
-
+bool done = false;
 void loop() {
+  done = false;
+  float new_angles[num_motors];//array storing the new ABSOLUTE angles 
+  float angle_differences[num_motors];//array storing the RELATIVE angle movement 
   if (Serial.available() > 0) {
     String data_str = Serial.readStringUntil('\n');
-    float new_angles[num_motors];//array storing the new ABSOLUTE angles 
+    
     parseData(data_str, new_angles);
-    float angle_differences[num_motors];//array storing the RELATIVE angle movement 
+    
      
     for (int i = 0; i < num_motors; i++) {
       angle_differences[i] = new_angles[i] - prev_angles[i];//Anti-clockwise rotations are positive, frame of reference is the motor shaft pointed towards you
@@ -34,6 +41,17 @@ void loop() {
     stepMotors(angle_differences);
     memcpy(prev_angles, new_angles, sizeof(prev_angles));
   }
+
+  //Reset the motors to 0s
+  else if(!done){
+    done = true;
+    for (int i = 0; i < num_motors; i++) {new_angles[i] = 0;}
+    for (int i = 0; i < num_motors; i++) {
+        angle_differences[i] = new_angles[i] - prev_angles[i];
+    }
+    stepMotors(angle_differences);  
+  }
+  
 }
 float findMax(float arr[], int size) {
     if (size <= 0) return NAN; 
@@ -88,11 +106,11 @@ void stepMotors(float *angle_differences)
   int max_steps = (int)findMax(steps_required,num_motors);
   for (int step = 0; step < max_steps; step++)
   {
-    int steps_required = round(abs(angle_differences[j]) / motor_step_angles[j]);
+    
 
     for (int j = 0; j < num_motors; j++)
     {
-      
+      int steps_required = round(abs(angle_differences[j]) / motor_step_angles[j]);
       int direction = (angle_differences[j] > 0) ? HIGH : LOW;
       if (angle_differences[j] == 0) continue;
       if (step < steps_required)//if motor still needs to go to place
