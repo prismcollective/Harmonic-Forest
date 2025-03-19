@@ -41,25 +41,15 @@ void loop() {
       memcpy(prev_angles, new_angles, sizeof(prev_angles));
     } 
     else{
-    parseData(data_str, new_angles);
-    
-     
-    for (int i = 0; i < num_motors; i++) {
-      angle_differences[i] = new_angles[i] - prev_angles[i];//Anti-clockwise rotations are positive, frame of reference is the motor shaft pointed towards you
+      parseData(data_str, new_angles);
+      
+      
+      for (int i = 0; i < num_motors; i++) {
+        angle_differences[i] = new_angles[i] - prev_angles[i];//Anti-clockwise rotations are positive, frame of reference is the motor shaft pointed towards you
+      }
+      stepMotors(angle_differences);
+      memcpy(prev_angles, new_angles, sizeof(prev_angles));
     }
-    stepMotors(angle_differences);
-    memcpy(prev_angles, new_angles, sizeof(prev_angles));
-    }
-  }
-
-  //Reset the motors to 0s
-  else if(!done){
-    done = true;
-    for (int i = 0; i < num_motors; i++) {new_angles[i] = 0;}
-    for (int i = 0; i < num_motors; i++) {
-        angle_differences[i] = new_angles[i] - prev_angles[i];
-    }
-    stepMotors(angle_differences);  
   }
   
 }
