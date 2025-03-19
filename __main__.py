@@ -38,7 +38,7 @@ fein = audio_file.audio_file(fein_path, BASE_DIR=BASE_DIR)
 """
 ----CHANGE BELOW----
 """
-target_audio = campanella
+target_audio = minuet_bocc
 """
 ----CHANGE ABOVE----
 """
@@ -67,7 +67,7 @@ except KeyboardInterrupt:
     print("\nKeyboardInterrupt detected - Stopping audio...")
     stop_audio_flag = True
     pygame.mixer.music.stop()
-    audio_thread.join()  
+    audio_thread.join() 
     print("Audio stopped. Exiting program.")
 
 #extract_frequencies.visualize_activations(normalized_activations,bucket_edges)
