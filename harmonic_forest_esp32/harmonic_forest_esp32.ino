@@ -24,33 +24,24 @@ void setup() {
   }
   
 }
-bool done = false;
 void loop() {
-  done = false;
   float new_angles[num_motors];//array storing the new ABSOLUTE angles 
   float angle_differences[num_motors];//array storing the RELATIVE angle movement 
   if (Serial.available() > 0) {
     String data_str = Serial.readStringUntil('\n');
-    if (data_str.equalsIgnoreCase("RESET")) {
-      // Reset all motors to 0 degrees
-      for (int i = 0; i < num_motors; i++) {
-        new_angles[i] = 0;
-        angle_differences[i] = new_angles[i] - prev_angles[i];
-      }
-      stepMotors(angle_differences);
-      memcpy(prev_angles, new_angles, sizeof(prev_angles));
-    } 
-    else{
-      parseData(data_str, new_angles);
-      
-      
-      for (int i = 0; i < num_motors; i++) {
-        angle_differences[i] = new_angles[i] - prev_angles[i];//Anti-clockwise rotations are positive, frame of reference is the motor shaft pointed towards you
-      }
-      stepMotors(angle_differences);
-      memcpy(prev_angles, new_angles, sizeof(prev_angles));
+    
+    parseData(data_str, new_angles);
+    
+     
+    for (int i = 0; i < num_motors; i++) {
+      angle_differences[i] = new_angles[i] - prev_angles[i];//Anti-clockwise rotations are positive, frame of reference is the motor shaft pointed towards you
     }
+    stepMotors(angle_differences);
+    memcpy(prev_angles, new_angles, sizeof(prev_angles));
   }
+
+  //Reset the motors to 0s
+
   
 }
 float findMax(float arr[], int size) {
