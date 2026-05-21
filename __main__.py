@@ -28,6 +28,7 @@ BASE_DIR = os.path.join(file_dir, "Music-Assets")
 violinC4 = audio_file.audio_file(violin_c4_path, BASE_DIR=BASE_DIR)
 major_scale = audio_file.audio_file(major_scale_path, BASE_DIR=BASE_DIR)
 minuet_bocc = audio_file.audio_file(minuet_bocc_path, BASE_DIR=BASE_DIR)
+minuet_bocc_4_buckets = audio_file.audio_file(minuet_bocc_path, BASE_DIR=BASE_DIR, num_buckets=4)
 claire = audio_file.audio_file(claire_path, BASE_DIR=BASE_DIR)
 fur_elise = audio_file.audio_file(fur_elise_path, BASE_DIR=BASE_DIR)
 symphony_5 = audio_file.audio_file(symphony_5_path, BASE_DIR=BASE_DIR)
@@ -39,7 +40,7 @@ beaches = audio_file.audio_file(beaches_path, BASE_DIR=BASE_DIR)
 """
 ----CHANGE BELOW----
 """
-target_audio = minuet_bocc
+target_audio = minuet_bocc_4_buckets
 """
 ----CHANGE ABOVE----
 """

@@ -8,7 +8,7 @@ import graphing
 file_dir = os.path.dirname(__file__);
 
 BASE_DIR = os.path.join(file_dir, "Music-Assets")
-file_name = "fur-elise-beethoven-216331.wav"
+file_name = "25481__freqman__violin-minuet_boccherini-edit.wav"
 file_path = os.path.join(BASE_DIR, file_name)
 y, sr = librosa.load(file_path)
 
