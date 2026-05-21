@@ -3,9 +3,12 @@ import librosa
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.ndimage import gaussian_filter1d
+
+file_dir = os.path.dirname(__file__);
+
 class audio_file:  
     def __init__(self, audio_path, 
-                 BASE_DIR="/Users/samcy/OneDrive - University of Waterloo/Harmonic-Forest/Music-Assets", 
+                 BASE_DIR=os.path.join(file_dir, "Music-Assets"), 
                  num_buckets=8, 
                  normalized_activations_filename=None, 
                  bucket_edges_filename=None):

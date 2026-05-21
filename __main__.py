@@ -22,8 +22,9 @@ campanella_path = "Liszt___Paganini_-_Etude_No.3__La_campanella__64kb.wav"
 blue_danube_path = "iiif-service_mbrsrs_mbrsjukebox_dlc_victor_31450_02_c271_10_dlc_victor_31450_02_c271_10-full-full-0-full-default.wav"
 nocturne_path = "Frederic Chopin - Nocturne No. 2 In E Flat Major Op.9 No.2 (From Blue Lagoon).wav"
 beaches_path = "Beaches.wav"
-fein_path = "Travis Scott - FE!N.wav"
-BASE_DIR="/Users/samcy/OneDrive - University of Waterloo/Harmonic-Forest/Music-Assets"
+# fein_path = "Travis Scott - FE!N.wav"
+file_dir = os.path.dirname(__file__);
+BASE_DIR = os.path.join(file_dir, "Music-Assets")
 violinC4 = audio_file.audio_file(violin_c4_path, BASE_DIR=BASE_DIR)
 major_scale = audio_file.audio_file(major_scale_path, BASE_DIR=BASE_DIR)
 minuet_bocc = audio_file.audio_file(minuet_bocc_path, BASE_DIR=BASE_DIR)
@@ -34,7 +35,7 @@ campanella = audio_file.audio_file(campanella_path, BASE_DIR=BASE_DIR)
 blue_danube = audio_file.audio_file(blue_danube_path, BASE_DIR=BASE_DIR)
 nocturne = audio_file.audio_file(nocturne_path, BASE_DIR=BASE_DIR)
 beaches = audio_file.audio_file(beaches_path, BASE_DIR=BASE_DIR)
-fein = audio_file.audio_file(fein_path, BASE_DIR=BASE_DIR)
+# fein = audio_file.audio_file(fein_path, BASE_DIR=BASE_DIR)
 """
 ----CHANGE BELOW----
 """
@@ -44,7 +45,7 @@ target_audio = minuet_bocc
 """
 audio_path = target_audio.audio_path
 #Uncomment below to visualize activations
-#target_audio.visualize_activations()
+target_audio.visualize_activations()
 pygame.mixer.init()
 pygame.mixer.music.load(audio_path)
 audio_thread = threading.Thread(target=play_audio)
